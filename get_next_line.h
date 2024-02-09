@@ -6,7 +6,7 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:00:08 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/07 20:09:49 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:51:33 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-char	*ft_strdup(const char *s1, int str_len);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(char *s1, int str_len);
+char	*ft_strjoin(char *s1, char *s2);
 int		ft_strlen(const char *str);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
+size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
 
 #endif
 

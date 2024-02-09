@@ -6,7 +6,7 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:58:07 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/07 20:17:48 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/09 18:33:45 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,23 @@ char	*get_next_line(int fd)
 
 //remember to remove this block
 
+#include <stdio.h>
 #include <fcntl.h>
 
 int	main(void)
 {
 	int	fd;
-	int bytes;
+	// int bytes;
 	char *str;
 
+	// str = NULL;
 	fd = open("test.txt", O_RDONLY);
-	bytes = read(fd, str, 12);
-	str[bytes + 1]= '\0';
-	return (bytes);
+	str = get_next_line(fd);
+	
+	printf("GNL:%s\n", str);
+	str = get_next_line(fd);
+	printf("GNL:%s\n", str);
+	// bytes = read(fd, str, BUFFER_SIZE);
+	// str[bytes + 1]= '\0';
+	// return (bytes);
 }
