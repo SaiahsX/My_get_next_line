@@ -6,7 +6,7 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:58:07 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/09 18:33:45 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:21:32 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,24 @@ char	*get_next_line(int fd)
 
 int	main(void)
 {
-	int	fd;
-	// int bytes;
-	char *str;
+	int		fd;
+	char	*str;
 
-	// str = NULL;
 	fd = open("test.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("failed to open the file\n");
+		return (1);
+	}
+
 	str = get_next_line(fd);
-	
-	printf("GNL:%s\n", str);
-	str = get_next_line(fd);
-	printf("GNL:%s\n", str);
-	// bytes = read(fd, str, BUFFER_SIZE);
-	// str[bytes + 1]= '\0';
-	// return (bytes);
+
+	while (str)
+	{
+		printf("GNL:%s\n", str);
+		free(str);
+		str = get_next_line(fd);
+
+	}
+	return (0);
 }
