@@ -6,7 +6,7 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:58:07 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/13 20:07:38 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/14 00:08:17 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*get_next_line(int fd)
 }
 
 //remember to remove this block
-
+/*
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -109,7 +109,7 @@ int	main(void)
 	}
 	return (0);
 }
-
+*/
 /*
 #include "get_next_line.h"
 #include <sys/types.h>
@@ -156,3 +156,65 @@ int main(int argc, char *argv[])
 	return (0);
 }
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include "get_next_line.h" // Assuming you have a header file for get_next_line
+
+#define MAX_FD 10 // Maximum number of file descriptors to handle
+
+typedef struct {
+    int fd;
+    char *buffer;
+} FileState;
+
+int main(void) {
+    FileState fds[MAX_FD]; // Array to hold file descriptors and their buffers
+
+    // Open file descriptors
+    fds[0].fd = open("test.txt", O_RDONLY);
+    fds[1].fd = open("test2.txt", O_RDONLY);
+    // You can add more file descriptors as needed
+
+    if (fds[0].fd == -1 || fds[1].fd == -1 /* Add more conditions for additional file descriptors */) {
+        printf("Failed to open one or more files\n");
+        return 1;
+    }
+
+    // Initialize buffers for each file descriptor
+    for (int i = 0; i < MAX_FD; i++) {
+        fds[i].buffer = NULL;
+    }
+
+    // Read from each file descriptor in a round-robin fashion
+    int current_fd = 0;
+    while (1) {
+        char *str = get_next_line(fds[current_fd].fd);
+        if (str) {
+            printf("GNL from fd %d: %s\n", fds[current_fd].fd, str);
+            free(str);
+        } else {
+            // If end of file reached or error occurred, close the file descriptor
+            close(fds[current_fd].fd);
+            fds[current_fd].fd = -1;
+        }
+
+        // Move to the next file descriptor in a round-robin fashion
+        current_fd = (current_fd + 1) % MAX_FD;
+
+        // Check if all file descriptors are closed
+        int all_closed = 1;
+        for (int i = 0; i < MAX_FD; i++) {
+            if (fds[i].fd != -1) {
+                all_closed = 0;
+                break;
+            }
+        }
+        if (all_closed) break;
+    }
+
+    return 0;
+}
+
+
