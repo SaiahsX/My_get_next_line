@@ -6,7 +6,7 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:58:07 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/14 19:56:17 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:32:56 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ This function i needed to search through the static variable - lines for the
 '\n' character. If '\n' is found, the loop is broken. Then the program moves
 to the next executable. However, it should be noted that the whole string of
 characters read which may include the '\n' character is contained and 
-null terminated within the 'buffer' variable. The condition is triggered 
-if '\n' is found among the string.
+null terminated within the 'buffer' variable. The condition fails if '\n' is
+found among the string.
 
 However, while the condition above holds true, the loop performs a helping 
 function "ft_strjoin" from the Utils file. This aims to join accordingly
@@ -64,8 +64,48 @@ the left over is stored back inside the static variable, 'lines' for the next
 run of the function.
 
 Memory management:
+BUFFER_SIZE was defined for the variable, 'buffer' is such that this is managed
+dynamically. No memory needs to be freed.
 
+Checks are made in the parent function as marked at the start of this document.
+This ensures that the static variable memory is freed and set to NULL if it 
+fails.
 
+When the helper function "ft_strjoin" is called, memory is allocated to
+dynamically allocate sufficent memory for the function and freed if it fails.
+Likewise, within "ft_strjoin" is another helper function "ft_strdup" that 
+activates when the static variable passed as an argument is empty or at first 
+run of the function. The function "ft_strdup" duplicates the string passed as
+an argument while dynamically allocating sufficient memory. Subsequently, 
+the static variable passed as and argument (s1) for the function, "ft_strjoin" 
+is freed of memory after a succesful operation.
+
+Utility functions:
+For the get_next_line function (GNL), 5 helper functions are used to ensure the
+GNL functions as expected. The functions are listed as thus;
+
+ft_strjoin - This function performs a concactenation of two character variables 
+passed as an argument. It dynamically allocates memory to hold the result. 
+Finally, it frees the memory of all the parameters to avoid leaks. It received 
+the arguments, lines (static variable) and buffer from the mother function
+"get_next_line".
+
+ft_strdup - This function is called within "ft_strjoin" when a condtion of if
+the source parameter (lines or s1) os empty. This function duplicates the 
+second parameter (buffer or s2) while dynamically allocating memory to the
+to the result that is returned. No freeing of memory occours here because no
+other allocation was done to the source but only the result.
+
+ft_strlen - Our trusty function ;) is used at length in the utility file to
+determine the length of the string characters in bytes passed as an argument.
+it returns an Int variable, 'count'.
+
+ft_strlcpy - This function is used within "ft_strjoin" as a means to copy 
+the destination parameter from "ft_strjoin" into the result passed as an 
+argument from same.
+
+ft_strlcat - This function is used as a final step in "ft_strjoin" to 
+concatenate the source the content of the result from "ft_strlcpy".
 */
 
 #include "get_next_line.h"
