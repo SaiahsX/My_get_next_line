@@ -6,14 +6,19 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:58:07 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/14 11:45:51 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:41:18 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*	Error handling controls; File descriptors (fd) are never in the negtive, 
-only positives - they must have a content. Buffers must be greater than 0.
-The read function is greater than 0 if the file can be opened and returns
--1 if the file cannot be opened. So, checking if the file can be opened 	*/
+/*	
+This is the bonus for the get_next_line function. This function has been 
+modified to read from multiple  file descriptors as dynamically as possible.
+
+The main changes to this function are evident from the header file name, the
+buffer size from header file set to 42 instead of 10 and the changing of 
+the static variable to a 2 dimensional array upto 1024 possible numbers of
+file descriptors.
+ 	*/
 
 #include "get_next_line_bonus.h"
 
@@ -78,79 +83,3 @@ char	*get_next_line(int fd)
 	}
 	return (final_lines(&lines[fd]));
 }
-
-//remember to remove this block
-/*
-#include <stdio.h>
-#include <fcntl.h>
-
-int	main(void)
-{
-	int		fd;
-	char	*str;
-	
-
-	fd = open("test.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		printf("failed to open the file\n");
-		return (1);
-	}
-
-	str = get_next_line(fd);
-
-
-	while (str)
-	{
-		printf("GNL:%s\n", str);
-		free(str);
-		str = get_next_line(fd);
-	}
-	return (0);
-}
-*/
-
-/* #include "get_next_line.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(int argc, char *argv[])
-{
-	char	*line;
-	int		fd;
-
-	if (argc < 2)
-	{
-		fprintf(stderr, "Usage: %s file1 file2 ...\n", argv[0]);
-		return (1);
-	}
-	for (int i = 1; i < argc; i++)
-	{
-		fd = open(argv[i], O_RDONLY);
-		if (fd == -1)
-		{
-			perror("Error opening file");
-			continue ; // Skip to the next file
-		}
-		printf("FILE: %s\n", argv[i]);
-		while (1)
-		{
-			line = get_next_line(fd);
-			if (line)
-				printf("%s", line);
-			else
-			{
-				printf("\nEOL: %s\n", argv[i]);
-				break ;
-			}
-			free(line);
-		}
-		close(fd);
-	}
-	if (system("leaks a.out > /dev/null"))
-		system("leaks a.out");
-	return (0);
-} */
