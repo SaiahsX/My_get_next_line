@@ -6,14 +6,67 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:58:07 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/14 13:43:00 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/14 19:56:17 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*	Error handling controls; File descriptors (fd) are never in the negtive, 
-only positives - they must have a content. Buffers must be greater than 0.
-The read function is greater than 0 if the file can be opened and returns
--1 if the file cannot be opened. So, checking if the file can be opened 	*/
+/*	
+The get_next_line function is a function designed to read and return lines via
+repeated calls to read the text file pointed to by the file descriptor (fd), ONE
+LINE AT A TIME including the terminating '\n' character except at the end of 
+the file which does not end with '\n' character. If theres nothing to be read,
+it should return NULL.
+
+"if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)"
+The conditions above are Error handling controls; File descriptors (fd) are 
+never in the negtive, only positives - they must have a content. Buffers must 
+be greater than 0. The read function is greater than 0 if the file can be 
+opened and returns -1 if the file cannot be opened. So, checking if the file 
+can be opened.
+
+How it works: 
+The function parameter receives the file descriptor (fd) passed as
+an argument. In a typical manner, we need a char pointer to a Static 
+variable called 'lines'. This is where we dump the output result.
+
+Likewise we need a char pointer variable called buffer with a predetermined 
+size - 10 bytes of char (This value can be modified or desired) of BUFFER 
+defined in the header file. The purpose of this variable is to receive the 
+text read from the fd for further processing. 
+
+In addition, an INT variable, 'bytes_read' is declared to keep track of the 
+amount of bytes read from the fd. This bytes_read is an index of sort that 
+we use for the char, buffer.
+
+Already, in order to fulfil the condition necessary for reading the fd, 
+bytes_read is initialised to 1, meaning if there are no bytes_read, then the
+program moves on to the next execution. 
+ 
+Also, a  function, "nl_found" (new line found) is called in this condition. 
+This function i needed to search through the static variable - lines for the
+'\n' character. If '\n' is found, the loop is broken. Then the program moves
+to the next executable. However, it should be noted that the whole string of
+characters read which may include the '\n' character is contained and 
+null terminated within the 'buffer' variable. The condition is triggered 
+if '\n' is found among the string.
+
+However, while the condition above holds true, the loop performs a helping 
+function "ft_strjoin" from the Utils file. This aims to join accordingly
+the content of buffer to the static variable, lines. In the first call, the 
+static variable 'lines' is empty. Next, within "ft_strjoin", a checking condition
+for this is inserted to duplicate (ft_strdup) the 'buffer' into the 
+static variable, 'lines'. The return result is the static variable, 'lines' 
+whose address is passed as an argument to another helper function "final_lines".
+
+The purpose of the helper function, "final_lines" is to serch through the string
+and refine the output by returning the string read from the fd + '\n' and
+the left over is stored back inside the static variable, 'lines' for the next
+run of the function.
+
+Memory management:
+
+
+*/
 
 #include "get_next_line.h"
 
@@ -109,6 +162,7 @@ int	main(void)
 	return (0);
 }
 */
+
 // #include "get_next_line.h"
 // #include <sys/types.h>
 // #include <sys/stat.h>
