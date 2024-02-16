@@ -60,12 +60,24 @@ The purpose of the helper function, *final_lines* is to serch through the string
 Error control or Checks are made in the parent function as marked at the [start](#error-controls) of this document.
 This ensures that the static variable memory is freed and set to NULL if the condition or control fails.
 
+In a fairly similar manner, if the first run of the function was succesful and the file was read, Then it fails the read on the second run. We need to remember that static variable *lines* has been allocated previously, so we need to free *lines* and make it a **NULL** as well. This is illustrated below
+
+```C
+if (bytes_read == -1)
+		{
+			if (lines)
+				free(lines);
+			lines = NULL;
+			return (NULL);
+		}
+```
+
 When the helper function *ft_strjoin* is called, memory is allocated to
 dynamically allocate sufficent memory for the function and freed if it fails.
 Likewise, within *ft_strjoin* is another helper function *ft_strdup* that 
 activates when the static variable passed as an argument is empty or at first run of the function. The function *ft_strdup* duplicates the string passed as an argument while dynamically allocating sufficient memory. Subsequently, the static variable passed as and argument (**s1**) for the function, *ft_strjoin* is freed of memory after a succesful operation.
 
-From the helper function **static char final_lines** Memory allocated to the char pointer to a variable *temp_lines* used as a temporary storage to store the final out was bein freed due to the allocation from the utils function *ft_strdup* and same is made **NULL** after freeing the memory. This is good practice to prevent memory leaks.
+From the helper function **static char final_lines** Memory allocated to the char pointer to variable *temp_lines* used as a temporary storage to store the final output was being freed due to the allocation from the utils function *ft_strdup* and same is made **NULL** after freeing the memory. This is good practice to prevent memory leaks.
 
 ## Utility functions:
 The functions in the utility files **get_next_line_utils.c** are recycled function from my previous project called **FT_LIBFT**. These function are either used as they were or modified to fit the use within the **GNL** function.
