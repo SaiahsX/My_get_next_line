@@ -78,8 +78,8 @@ char	*get_next_line(int fd)
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
-			if (lines)
-				free(lines);
+			if (lines[fd])
+				free(lines[fd]);
 			lines[fd] = NULL;
 			return (NULL);
 		}
