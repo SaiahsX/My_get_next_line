@@ -91,3 +91,19 @@ The parent **GNL** file houses 2 helper functions that are made static. This mea
 **static char	final_lines** - This helper function receives the double pointer to a string (receiving the string as a whole) since it passed via a deference operation '&lines' from **GNL** parent function. The aim of this function is to clean up the string contained within the double array *(**lines)*. Cleaning up means the functions loops through the string while it exists and until it encounters the *\n* character. Since we need the *\n* to terminate each lines to be outputed, we also loop one more step forward. These are achieved with help of an indexer we declared 'Int i'.
 
 The outcome of the loop is duplicated into a char pointer variable, result with the help of utils function *ft_strdup*. This result is our return value. However we need to help the static variable remember what needs to remain within it since we have taken what we need in the first run. So we duplicated the remaing string after the *\n* character into it.This will be remembered by the static variable and serve in the next run until another *\n* is encountered.
+
+## Learning points:
+At the point of developing this project, I was able to learn and understand the reusability of past projects functions in thiis current project.
+
+Static variables, yes, it was interesting to learn about this type. However, it is different in concept with static functions whose usage role is bound within a function file. So it can be said that static variables are special types of variable that dont get destroyed or expired after a function is run because it remembers what it did last and continues from where its left off from previous run.
+
+The **read** functiion, well, this was a first for me. This function is defined inside the <unistd.c> header file. **read** function reads  specified amound of bytes (**BUFFER_SIZE**) of data previously written to a file indicated by **fd** into the memory area indicated by the char variable *buffer*. If any portion of a regular file prior to the end-of-file has not been written, **read** shall return 0 bytes.
+
+Memory management was another milestone of learning for me. I needed to keep track of every allocation of memory and to ensure they are being freed after being used or when not used any more. I would say its like keeping track of you bills so that youu dont get a penalty :).
+
+Understanding the arithmetics of pointers was exhausting as usual. However,I did learn that when you are referencing a pointer to a string as an argument to a function - you pass the address of that string (&lines). Consequently, the function receives the reference in its parameter as a double pointer (**lines). I think learning about pointers is progressing and will only progress more.
+
+Another vital learning point was when I was trying to fine tune this function, I realised that *ft_strjoin* cannot be replaced with *ft_strlcat* because of its differring type, return values and the static variable needs some memory to beb allocated which *ft_strlcat* did not do.
+
+Finnaly, a caveat to consider was that, this function works as it should, however, some tests would give a time out prompt, this doesnt mean it fails, more time need to be assigned for these testers to work as it should.
+
