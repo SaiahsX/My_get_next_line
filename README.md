@@ -57,7 +57,7 @@ The purpose of the helper function, *final_lines* is to serch through the string
 ## Memory management:
 *BUFFER_SIZE* was defined for the variable, *buffer* is such that this is managed dynamically. No memory needs to be freed.
 
-Checks are made in the parent function as marked at the [start](#error-controls) of this document.
+Error control or Checks are made in the parent function as marked at the [start](#error-controls) of this document.
 This ensures that the static variable memory is freed and set to NULL if it fails.
 
 When the helper function *ft_strjoin* is called, memory is allocated to
