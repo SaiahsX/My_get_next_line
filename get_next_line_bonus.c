@@ -6,7 +6,7 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:58:07 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/14 21:41:18 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:45:34 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ The main changes to this function are evident from the header file name, the
 buffer size from header file set to 42 instead of 10 and the changing of 
 the static variable to a 2 dimensional array upto 1024 possible numbers of
 file descriptors.
- 	*/
+*/
 
 #include "get_next_line_bonus.h"
 
@@ -77,7 +77,12 @@ char	*get_next_line(int fd)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
+		{
+			if (lines)
+				free(lines);
+			lines[fd] = NULL;
 			return (NULL);
+		}
 		buffer[bytes_read] = '\0';
 		lines[fd] = ft_strjoin(lines[fd], buffer);
 	}

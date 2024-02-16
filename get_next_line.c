@@ -6,7 +6,7 @@
 /*   By: oadewumi <oadewumi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:58:07 by oadewumi          #+#    #+#             */
-/*   Updated: 2024/02/14 21:32:56 by oadewumi         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:46:32 by oadewumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,12 @@ char	*get_next_line(int fd)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
+		{
+			if (lines)
+				free(lines);
+			lines = NULL;
 			return (NULL);
+		}
 		buffer[bytes_read] = '\0';
 		lines = ft_strjoin(lines, buffer);
 	}
