@@ -9,7 +9,7 @@
 The **get_next_line** function is a function designed to read and return *lines* via repeated calls to read the text file pointed to by the file descriptor (**fd**), **ONE LINE AT A TIME** including the terminating *\n* character except at the end of the file which does not end with *\n* character. If theres nothing to be read,
 it should return **NULL**.
 
-## error-controls
+# error-controls
 ```C
 if (**fd** < 0 || BUFFER_SIZE <= 0 || read(**fd**, NULL, 0) < 0
 ```
@@ -57,7 +57,7 @@ The purpose of the helper function, *final_lines* is to serch through the string
 ## Memory management:
 *BUFFER_SIZE* was defined for the variable, *buffer* is such that this is managed dynamically. No memory needs to be freed.
 
-Checks are made in the parent function as marked at the [start](##error-controls) of this document.
+Checks are made in the parent function as marked at the [start](#error-controls) of this document.
 This ensures that the static variable memory is freed and set to NULL if it fails.
 
 When the helper function *ft_strjoin* is called, memory is allocated to
