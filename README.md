@@ -14,7 +14,7 @@ it should return **NULL**.
 if (**fd** < 0 || BUFFER_SIZE <= 0 || read(**fd**, NULL, 0) < 0
 ```
 
-The conditions above are Error handling controls; File descriptors (**fd**) are never in the negtive, only positives - they must have a content. Buffers must be greater than 0. The **read** function is greater than 0 if the file can be opened and read and returns -1 if the file cannot be opened. So, checking if the file can be opened.
+The conditions above are Error handling controls; File descriptors (**fd**) are never in the negtive, only positives - they must have a content or exist. Buffer size for storing the content read from **fd** must be greater than 0. The **read** function is greater than 0 if the file can be opened and read and returns -1 if the file cannot be opened. So, checking if the file can be opened.
 
 ## How it works: 
 The function parameter receives the file descriptor (**fd**) passed as
@@ -58,7 +58,7 @@ The purpose of the helper function, *final_lines* is to serch through the string
 *BUFFER_SIZE* was defined for the variable, *buffer* is such that this is managed dynamically. No memory needs to be freed.
 
 Error control or Checks are made in the parent function as marked at the [start](#error-controls) of this document.
-This ensures that the static variable memory is freed and set to NULL if it fails.
+This ensures that the static variable memory is freed and set to NULL if the condition or control fails.
 
 When the helper function *ft_strjoin* is called, memory is allocated to
 dynamically allocate sufficent memory for the function and freed if it fails.
