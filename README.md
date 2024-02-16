@@ -4,6 +4,7 @@
 - [How it works](#how-it-works)
 - [Utility/Helper functions](#utility-functions)
 - [Memory-Management](#memory-management)
+- [What I learnt](#Learning-points)
 
 # My_**get_next_line**
 The **get_next_line** function is a function designed to read and return *lines* via repeated calls to read the text file pointed to by the file descriptor (**fd**), **ONE LINE AT A TIME** including the terminating *\n* character except at the end of the file which does not end with *\n* character. If theres nothing to be read,
